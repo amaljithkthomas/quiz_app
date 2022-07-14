@@ -26,6 +26,12 @@ class Quiz extends StatefulWidget {
 
 class _QuizState extends State<Quiz> {
   List<Icon> scoreKeeper = [];
+  List<String> questions = [
+    'You can lead a cow down stairs but not upstairs.',
+    'Approximately one quarter of the human bones are in the feet.',
+    'A slug\'s blood is green.'
+  ];
+  int questionNumber = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +42,8 @@ class _QuizState extends State<Quiz> {
           flex: 5,
           child: Center(
             child: Text(
-              'This is where the question text will go',
-              style: TextStyle(color: Colors.white, fontSize: 17),
+              questions[questionNumber],
+              style: TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),
         ),
@@ -55,15 +61,15 @@ class _QuizState extends State<Quiz> {
                 ),
               ),
               onPressed: () {
-                setState((){
+                setState(() {
                   scoreKeeper.add(
                     Icon(
                       Icons.check,
                       color: Colors.green,
                     ),
                   );
+                  questionNumber = questionNumber + 1;
                 });
-
               },
               child: const Text(
                 'True',
@@ -88,13 +94,14 @@ class _QuizState extends State<Quiz> {
                 ),
               ),
               onPressed: () {
-                setState((){
+                setState(() {
                   scoreKeeper.add(
                     Icon(
                       Icons.close,
                       color: Colors.red,
                     ),
                   );
+                  questionNumber = questionNumber + 1;
                 });
               },
               child: const Text(
@@ -111,7 +118,6 @@ class _QuizState extends State<Quiz> {
             children: scoreKeeper,
           ),
         ),
-
       ],
     );
   }
