@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
 
+//import 'package:quizz_app/questionSet.dart';
+import 'package:flutter/material.dart';
+import 'package:quizz_app/quiz_brain.dart';
+
+QuizBrain quizBrain = QuizBrain();
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -26,12 +30,29 @@ class Quiz extends StatefulWidget {
 
 class _QuizState extends State<Quiz> {
   List<Icon> scoreKeeper = [];
-  List<String> questions = [
-    'You can lead a cow down stairs but not upstairs.',
-    'Approximately one quarter of the human bones are in the feet.',
-    'A slug\'s blood is green.'
-  ];
+  // List<String> questions = [
+  //   'You can lead a cow down stairs but not upstairs.',
+  //   'Approximately one quarter of the human bones are in the feet.',
+  //   'A slug\'s blood is green.',
+  //   'Lakshadweep is an island.'
+  // ];
+
+
   int questionNumber = 0;
+  // List<bool> answers = [
+  //   false,
+  //   true,
+  //   true,
+  //   true
+  // ];
+  bool? correctAnswer;
+
+  // List<Question> questionBank = [
+  //   Question(question: 'You can lead a cow down stairs but not upstairs.', answer: false),
+  //   Question(question: 'Approximately one quarter of the human bones are in the feet.', answer: true),
+  //   Question(question: 'A slug\'s blood is green.', answer: true),
+  //   Question(question: 'Lakshadweep is an island.', answer: true)
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +63,7 @@ class _QuizState extends State<Quiz> {
           flex: 5,
           child: Center(
             child: Text(
-              questions[questionNumber],
+              quizBrain.questionBank[questionNumber].question,
               style: TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),
@@ -61,11 +82,21 @@ class _QuizState extends State<Quiz> {
                 ),
               ),
               onPressed: () {
+                correctAnswer = quizBrain.questionBank[questionNumber].answer;
+                correctAnswer==true?
                 setState(() {
                   scoreKeeper.add(
                     Icon(
                       Icons.check,
                       color: Colors.green,
+                    ),
+                  );
+                  questionNumber = questionNumber + 1;
+                }):setState(() {
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.close,
+                      color: Colors.red,
                     ),
                   );
                   questionNumber = questionNumber + 1;
@@ -94,7 +125,17 @@ class _QuizState extends State<Quiz> {
                 ),
               ),
               onPressed: () {
+                correctAnswer = quizBrain.questionBank[questionNumber].answer;
+                correctAnswer==false?
                 setState(() {
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
+                  );
+                  questionNumber = questionNumber + 1;
+                }):setState(() {
                   scoreKeeper.add(
                     Icon(
                       Icons.close,
