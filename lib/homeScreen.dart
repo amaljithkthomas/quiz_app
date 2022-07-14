@@ -9,11 +9,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(10.0),
           child: Quiz(),
         ),
       ),
@@ -63,8 +63,8 @@ class _QuizState extends State<Quiz> {
           flex: 5,
           child: Center(
             child: Text(
-              quizBrain.questionBank[questionNumber].question,
-              style: TextStyle(color: Colors.white, fontSize: 25),
+              quizBrain.getQuestionText(questionNumber),
+              style: const TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),
         ),
@@ -75,18 +75,18 @@ class _QuizState extends State<Quiz> {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.green),
                 side: MaterialStateProperty.all(
-                  BorderSide(
+                  const BorderSide(
                     style: BorderStyle.solid,
                     color: Colors.white,
                   ),
                 ),
               ),
               onPressed: () {
-                correctAnswer = quizBrain.questionBank[questionNumber].answer;
+                correctAnswer = quizBrain.getAnswer(questionNumber);
                 correctAnswer==true?
                 setState(() {
                   scoreKeeper.add(
-                    Icon(
+                    const Icon(
                       Icons.check,
                       color: Colors.green,
                     ),
@@ -94,7 +94,7 @@ class _QuizState extends State<Quiz> {
                   questionNumber = questionNumber + 1;
                 }):setState(() {
                   scoreKeeper.add(
-                    Icon(
+                    const Icon(
                       Icons.close,
                       color: Colors.red,
                     ),
@@ -118,18 +118,18 @@ class _QuizState extends State<Quiz> {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.red),
                 side: MaterialStateProperty.all(
-                  BorderSide(
+                  const BorderSide(
                     style: BorderStyle.solid,
                     color: Colors.white,
                   ),
                 ),
               ),
               onPressed: () {
-                correctAnswer = quizBrain.questionBank[questionNumber].answer;
+                correctAnswer = quizBrain.getAnswer(questionNumber);
                 correctAnswer==false?
                 setState(() {
                   scoreKeeper.add(
-                    Icon(
+                    const Icon(
                       Icons.check,
                       color: Colors.green,
                     ),
@@ -137,7 +137,7 @@ class _QuizState extends State<Quiz> {
                   questionNumber = questionNumber + 1;
                 }):setState(() {
                   scoreKeeper.add(
-                    Icon(
+                    const Icon(
                       Icons.close,
                       color: Colors.red,
                     ),
