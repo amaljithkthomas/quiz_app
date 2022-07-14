@@ -25,6 +25,8 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  List<Icon> scoreKeeper = [];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -52,7 +54,17 @@ class _QuizState extends State<Quiz> {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                setState((){
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
+                  );
+                });
+
+              },
               child: const Text(
                 'True',
                 style: TextStyle(
@@ -75,7 +87,16 @@ class _QuizState extends State<Quiz> {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                setState((){
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ),
+                  );
+                });
+              },
               child: const Text(
                 'False',
                 style: TextStyle(
@@ -87,13 +108,10 @@ class _QuizState extends State<Quiz> {
         ),
         Expanded(
           child: Row(
-            children: [
-              Icon(Icons.check,color: Colors.green,),
-              Icon(Icons.close,color: Colors.red,),
-
-            ],
+            children: scoreKeeper,
           ),
-        )
+        ),
+
       ],
     );
   }
