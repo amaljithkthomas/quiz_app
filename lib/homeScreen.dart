@@ -1,9 +1,10 @@
-
 //import 'package:quizz_app/questionSet.dart';
 import 'package:flutter/material.dart';
 import 'package:quizz_app/quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 QuizBrain quizBrain = QuizBrain();
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -30,6 +31,7 @@ class Quiz extends StatefulWidget {
 
 class _QuizState extends State<Quiz> {
   List<Icon> scoreKeeper = [];
+
   // List<String> questions = [
   //   'You can lead a cow down stairs but not upstairs.',
   //   'Approximately one quarter of the human bones are in the feet.',
@@ -37,8 +39,7 @@ class _QuizState extends State<Quiz> {
   //   'Lakshadweep is an island.'
   // ];
 
-
-  int questionNumber = 0;
+  //
   // List<bool> answers = [
   //   false,
   //   true,
@@ -53,6 +54,48 @@ class _QuizState extends State<Quiz> {
   //   Question(question: 'A slug\'s blood is green.', answer: true),
   //   Question(question: 'Lakshadweep is an island.', answer: true)
   // ];
+  void checkAnswer(bool userPickedAnswer) {
+    correctAnswer = quizBrain.getAnswer();
+    if (quizBrain.isFinished() == true) {
+
+      Alert(
+        context: context,
+        title: 'Finished',
+        desc: 'You\'ve reached the end of quiz',
+
+      ).show();
+
+      setState((){
+        quizBrain.resetQuiz();
+
+        scoreKeeper = [];
+      });
+    } else {
+      correctAnswer == userPickedAnswer
+          ? setState(() {
+              if (quizBrain.scoreKeeperCheck() == true) {
+                scoreKeeper.add(
+                  const Icon(
+                    Icons.check,
+                    color: Colors.green,
+                  ),
+                );
+              }
+              quizBrain.nextQuestion();
+            })
+          : setState(() {
+              if (quizBrain.scoreKeeperCheck() == true) {
+                scoreKeeper.add(
+                  const Icon(
+                    Icons.close,
+                    color: Colors.red,
+                  ),
+                );
+              }
+              quizBrain.nextQuestion();
+            });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +106,7 @@ class _QuizState extends State<Quiz> {
           flex: 5,
           child: Center(
             child: Text(
-              quizBrain.getQuestionText(questionNumber),
+              quizBrain.getQuestionText(),
               style: const TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),
@@ -82,25 +125,26 @@ class _QuizState extends State<Quiz> {
                 ),
               ),
               onPressed: () {
-                correctAnswer = quizBrain.getAnswer(questionNumber);
-                correctAnswer==true?
-                setState(() {
-                  scoreKeeper.add(
-                    const Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ),
-                  );
-                  questionNumber = questionNumber + 1;
-                }):setState(() {
-                  scoreKeeper.add(
-                    const Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ),
-                  );
-                  questionNumber = questionNumber + 1;
-                });
+                // correctAnswer = quizBrain.getAnswer();
+                // correctAnswer==true?
+                // setState(() {
+                //   scoreKeeper.add(
+                //     const Icon(
+                //       Icons.check,
+                //       color: Colors.green,
+                //     ),
+                //   );
+                //   quizBrain.nextQuestion();
+                // }):setState(() {
+                //   scoreKeeper.add(
+                //     const Icon(
+                //       Icons.close,
+                //       color: Colors.red,
+                //     ),
+                //   );
+                //   quizBrain.nextQuestion();
+                // });
+                checkAnswer(true);
               },
               child: const Text(
                 'True',
@@ -125,25 +169,26 @@ class _QuizState extends State<Quiz> {
                 ),
               ),
               onPressed: () {
-                correctAnswer = quizBrain.getAnswer(questionNumber);
-                correctAnswer==false?
-                setState(() {
-                  scoreKeeper.add(
-                    const Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ),
-                  );
-                  questionNumber = questionNumber + 1;
-                }):setState(() {
-                  scoreKeeper.add(
-                    const Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ),
-                  );
-                  questionNumber = questionNumber + 1;
-                });
+                // correctAnswer = quizBrain.getAnswer();
+                // correctAnswer==false?
+                // setState(() {
+                //   scoreKeeper.add(
+                //     const Icon(
+                //       Icons.check,
+                //       color: Colors.green,
+                //     ),
+                //   );
+                //   quizBrain.nextQuestion();
+                // }):setState(() {
+                //   scoreKeeper.add(
+                //     const Icon(
+                //       Icons.close,
+                //       color: Colors.red,
+                //     ),
+                //   );
+                //   quizBrain.nextQuestion();
+                // });
+                checkAnswer(false);
               },
               child: const Text(
                 'False',
